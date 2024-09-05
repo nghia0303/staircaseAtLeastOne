@@ -1,3 +1,5 @@
+#With missing block, the last row of L block will be built with bi-nominal
+
 import math
 
 from CNF import CNF
@@ -81,7 +83,7 @@ class StairCaseALO:
             last_left = self.number_of_rows
             last_right = math.ceil(self.number_of_rows / self.k) * self.k
 
-            # Bio-nominal at least one element in the last row -> L[last row]
+            # Bi-nominal at least one element in the last row -> L[last row]
             print("Last row")
             last_row = []
             for i in range(last_left, last_right + 1):
@@ -91,14 +93,6 @@ class StairCaseALO:
                 self.clause_count += 1
                 last_row.append(self.x_map[i])
 
-            # cnf_line = [-self.l_map[self.number_of_rows]] + last_row
-            # print("-L", self.number_of_rows, " ", last_row, " ", cnf_line)
-            # self.cnf.append(cnf_line)
-            # self.clause_count += 1
-
-            # self.cnf.append(last_row)
-            # self.clause_count += 1
-            # print("At least one element in the last row: ", last_row)
 
     def building_l_block(self, left_index, right_index):
         if right_index > self.number_of_rows:
@@ -169,7 +163,7 @@ class StairCaseALO:
 
 def main():
 
-    n = 18
+    n = 200
     k = 5
     variable_list = list(range(1, n+1))
 
