@@ -203,6 +203,6 @@ def main():
     print(encoding)
     print("added variable", encoding.current_variable_count)
     print("added clauses", encoding.clause_count)
-    cnf.write_to_file("StairCaseALO_keepBuilding.cnf")
+    cnf.write_to_file("cnf/StairCaseALO_keepBuilding.cnf")
 if __name__ == "__main__":
     main()
