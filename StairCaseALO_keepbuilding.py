@@ -1,10 +1,7 @@
 # With missing block, keep building until full block
 # The number of row wil be (n)
 
-
 import math
-
-from jupyter_client.session import session_flags
 
 from CNF import CNF
 
@@ -157,16 +154,30 @@ class StairCaseALO:
                 print("L", i, " ", "R", i, " ", cnf_line)
             else:
                 # cnf_line = [self.l_map[i]]
-                if i != self.number_of_rows:
-                    cnf_line = [self.x_map[i], self.l_map[i+1]]
-                    print("X", i, " ", "L", i+1)
-                    self.cnf.append(cnf_line)
-                    self.clause_count += 1
-                else:
-                    cnf_line = [self.x_map[i], self.r_map[i-1]]
-                    print("X", i, " ", "R", i - 1)
-                    self.cnf.append(cnf_line)
-                    self.clause_count += 1
+                # if i != self.number_of_rows:
+                #     cnf_line = [self.x_map[i], self.l_map[i+1]]
+                #     print("X", i, " ", "L", i+1)
+                #     self.cnf.append(cnf_line)
+                #     self.clause_count += 1
+                # else:
+                #     cnf_line = [self.x_map[i], self.r_map[i-1]]
+                #     print("X", i, " ", "R", i - 1)
+                #     self.cnf.append(cnf_line)
+                #     self.clause_count += 1
+
+                cnf_line = [self.x_map[i]]
+                print("X", i, end=" ")
+                if (i + 1) in self.l_map:
+                    cnf_line.append(self.l_map[i + 1])
+                    print("L", i + 1, end=" ")
+                if (i - 1) in self.r_map:
+                    cnf_line.append(self.r_map[i - 1])
+                    print("R", i - 1, end=" ")
+                print()
+                self.cnf.append(cnf_line)
+                self.clause_count += 1
+
+
 
 
 
@@ -174,8 +185,8 @@ class StairCaseALO:
 
 def main():
 
-    n = int(input())
-    k = int(input())
+    n = 18
+    k = 5
     variable_list = list(range(1, n+1))
 
     encoding = StairCaseALO(
@@ -192,6 +203,6 @@ def main():
     print(encoding)
     print("added variable", encoding.current_variable_count)
     print("added clauses", encoding.clause_count)
-    cnf.write_to_file("StairCaseALO.cnf")
+    cnf.write_to_file("StairCaseALO_keepBuilding.cnf")
 if __name__ == "__main__":
     main()

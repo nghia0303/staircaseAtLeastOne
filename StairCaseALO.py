@@ -51,7 +51,7 @@ class StairCaseALO:
         for i in range(1, self.number_of_rows + 1):
             if i % self.k == 0:
                 self.l_map[i] = self.x_map[i]
-            else:
+            elif i % self.k != 1:
                 self.current_variable_count += 1
                 self.l_map[i] = self.current_variable_count
 
@@ -59,7 +59,8 @@ class StairCaseALO:
     def add_r_map(self):
         for i in range(1, self.number_of_rows + 1):
             if i % self.k == 1:
-                self.r_map[i] = self.l_map[i]
+                # self.r_map[i] = self.l_map[i]
+                pass
             elif i % self.k == 2:
                 self.r_map[i] = self.x_map[i + self.k - 1]
             else:
@@ -97,7 +98,7 @@ class StairCaseALO:
     def building_l_block(self, left_index, right_index):
         if right_index > self.number_of_rows:
             right_index = self.number_of_rows
-        for i in range(right_index, left_index, -1):
+        for i in range(right_index, left_index + 1, -1):
             print("i: ", i)
             cnf_line = [-self.l_map[i], self.l_map[i - 1]]
             print("-L", i, " ", "L", i - 1, " ", cnf_line)
@@ -129,7 +130,7 @@ class StairCaseALO:
     def building_r_block(self, left_index, right_index):
         if right_index > self.number_of_rows:
             right_index = self.number_of_rows
-        for i in range(left_index + 1, right_index + 1):
+        for i in range(left_index + 1, right_index):
             print("i: ", i)
             cnf_line = [-self.r_map[i-1], self.r_map[i]]
             print("-R", i-1, " ", "R", i, " ", cnf_line)
@@ -156,14 +157,25 @@ class StairCaseALO:
                 self.clause_count += 1
                 print("L", i, " ", "R", i, " ", cnf_line)
             else:
-                cnf_line = [self.l_map[i]]
+                # cnf_line = [self.l_map[i]]
+                # self.cnf.append(cnf_line)
+                # self.clause_count += 1
+                # print("L", i, " ", cnf_line)
+                cnf_line = [self.x_map[i]]
+                print("X", i, end=" ")
+                if (i + 1) in self.l_map:
+                    cnf_line.append(self.l_map[i + 1])
+                    print("L", i + 1, end=" ")
+                if (i - 1) in self.r_map:
+                    cnf_line.append(self.r_map[i - 1])
+                    print("R", i - 1, end=" ")
+                print()
                 self.cnf.append(cnf_line)
                 self.clause_count += 1
-                print("L", i, " ", cnf_line)
 
 def main():
 
-    n = 200
+    n = 18
     k = 5
     variable_list = list(range(1, n+1))
 
